@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" %>
 
-<%@ Import Namespace="Newtonsoft.Json" %>
-
 <script runat="server">
 
     public string ResultJson { get; set; }
@@ -43,12 +41,12 @@
             UserController.CreateUser(ref user);
 
 
-            ResultJson = JsonConvert.SerializeObject(new Result() { Message = "User has been created", Status = "Success" });
+            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = "User has been created", Status = "Success" });
             BindUsers();
         }
         catch (Exception ex)
         {
-            ResultJson = JsonConvert.SerializeObject(new Result() { Message = ex.Message, Status = "Error" });
+            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = ex.Message, Status = "Error" });
         }
     }
 
@@ -59,11 +57,11 @@
             MembershipUser user = Membership.GetUser(cp_Username.Text);
 
             user.ChangePassword(user.ResetPassword(), cp_Password.Text);
-            ResultJson = JsonConvert.SerializeObject(new Result() { Message = "Password has been changed", Status = "Success" });
+            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = "Password has been changed", Status = "Success" });
         }
         catch (Exception ex)
         {
-            ResultJson = JsonConvert.SerializeObject(new Result() { Message = ex.Message, Status = "Error" });
+            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = ex.Message, Status = "Error" });
         }
 
     }
@@ -75,11 +73,11 @@
         {
             MembershipUser user = Membership.GetUser(cp_Username.Text);
             var password = user.GetPassword();
-            ResultJson = JsonConvert.SerializeObject(new Result() {Message = string.Format("Password for user <strong>{0}</strong> is: <strong>{1}</strong>", user.UserName, password), Status = "Success"});
+            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = string.Format("Password for user <strong>{0}</strong> is: <strong>{1}</strong>", user.UserName, password), Status = "Success" });
         }
         catch (Exception ex)
         {
-            ResultJson = JsonConvert.SerializeObject(new Result() { Message = ex.Message, Status = "Error" });
+            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = ex.Message, Status = "Error" });
         }
 
 
