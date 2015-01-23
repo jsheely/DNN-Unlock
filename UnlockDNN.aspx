@@ -1,14 +1,12 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" %>
 
+<%@ Import Namespace="System.Collections.Generic" %>
+<%@ Import Namespace="System.Linq" %>
+
 <script runat="server">
 
     public string ResultJson { get; set; }
-    public class Result
-    {
-        public string Status { get; set; }
-        public string Message { get; set; }
-    }
-
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack) BindUsers();
@@ -41,12 +39,12 @@
             UserController.CreateUser(ref user);
 
 
-            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = "User has been created", Status = "Success" });
+            ResultJson = String.Format("{{ Message: 'User has been created', Status: 'Success' }}");
             BindUsers();
         }
         catch (Exception ex)
         {
-            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = ex.Message, Status = "Error" });
+            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message);
         }
     }
 
@@ -57,27 +55,27 @@
             MembershipUser user = Membership.GetUser(cp_Username.Text);
 
             user.ChangePassword(user.ResetPassword(), cp_Password.Text);
-            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = "Password has been changed", Status = "Success" });
+            ResultJson = String.Format("{{ Message: 'Password has been changed', Status: 'Success' }}");
         }
         catch (Exception ex)
         {
-            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = ex.Message, Status = "Error" });
+            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message);
         }
 
     }
-    
-    private void getPassword_OnClick(object sender, EventArgs e)
+
+    protected void getPassword_OnClick(object sender, EventArgs e)
     {
 
         try
         {
             MembershipUser user = Membership.GetUser(cp_Username.Text);
             var password = user.GetPassword();
-            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = string.Format("Password for user <strong>{0}</strong> is: <strong>{1}</strong>", user.UserName, password), Status = "Success" });
+            ResultJson = string.Format("{{ Message: '{0}', Status:  'Success' }}", string.Format("Password for user <strong>{0}</strong> is: <strong>{1}</strong>", user.UserName, password));
         }
         catch (Exception ex)
         {
-            ResultJson = JsonExtensionsWeb.ToJson(new Result() { Message = ex.Message, Status = "Error" });
+            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message);
         }
 
 
@@ -136,14 +134,14 @@
             cursor: pointer;
         }
 
-        .username-item:hover {
-            background-color: #428BCA;
-            color: #ffffff;
-        }
+            .username-item:hover {
+                background-color: #428BCA;
+                color: #ffffff;
+            }
 
-        .username-item i {
-            margin-right: 10px;
-        }
+            .username-item i {
+                margin-right: 10px;
+            }
     </style>
 
 </head>
