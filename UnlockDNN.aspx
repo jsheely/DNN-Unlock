@@ -44,7 +44,7 @@
         }
         catch (Exception ex)
         {
-            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message);
+            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message.Replace("'", "\""));
         }
     }
 
@@ -59,7 +59,7 @@
         }
         catch (Exception ex)
         {
-            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message);
+            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message.Replace("'", "\""));
         }
 
     }
@@ -75,7 +75,7 @@
         }
         catch (Exception ex)
         {
-            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message);
+            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message.Replace("'", "\""));
         }
 
 
