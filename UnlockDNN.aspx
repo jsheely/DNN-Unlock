@@ -14,7 +14,7 @@
 
     public static List<UserInfo> GetUsers()
     {
-        return UserController.GetUsers(-1).ToArray().Cast<UserInfo>().Take(25).ToList();
+        return UserController.GetUsers(-1).ToArray().Cast<UserInfo>().Where(u => u.IsSuperUser).Take(25).ToList();
     }
 
     protected void showUsers_OnClick(object sender, EventArgs e)
@@ -44,7 +44,7 @@
         }
         catch (Exception ex)
         {
-            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message);
+            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message.Replace("'", "\""));
         }
     }
 
@@ -59,7 +59,7 @@
         }
         catch (Exception ex)
         {
-            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message);
+            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message.Replace("'", "\""));
         }
 
     }
@@ -75,7 +75,7 @@
         }
         catch (Exception ex)
         {
-            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message);
+            ResultJson = string.Format("{{ Message: '{0}', Status: 'Error' }}", ex.Message.Replace("'", "\""));
         }
 
 
