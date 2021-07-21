@@ -36,7 +36,13 @@
             var user = new UserInfo { Username = cp_Username.Text, IsSuperUser = true };
             user.Membership.Approved = true;
             user.Membership.Password = cp_Password.Text;
-            UserController.CreateUser(ref user);
+            var result = UserController.CreateUser(ref user);
+
+            if((int)result == 13){
+                ResultJson = String.Format("{{ Message: 'User has been created', Status: 'Success' }}");
+            }else{
+                ResultJson = string.Format("{{ Message: 'Error creating user: {0}', Status: 'Error' }}", result);
+            }
 
 
             ResultJson = String.Format("{{ Message: 'User has been created', Status: 'Success' }}");
